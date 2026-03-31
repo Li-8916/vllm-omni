@@ -11,7 +11,6 @@ import torch.nn.functional as F
 from diffusers.models.attention import FeedForward
 from diffusers.models.embeddings import PixArtAlphaTextProjection, TimestepEmbedding, Timesteps
 from diffusers.models.modeling_outputs import Transformer2DModelOutput
-from vllm_omni.diffusion.layers.layernorm32 import FastLayerNorm32 as FP32LayerNorm
 from vllm.distributed import (
     get_tensor_model_parallel_rank,
     get_tensor_model_parallel_world_size,
@@ -29,6 +28,7 @@ from vllm_omni.diffusion.distributed.sp_plan import (
     SequenceParallelOutput,
 )
 from vllm_omni.diffusion.forward_context import get_forward_context
+from vllm_omni.diffusion.layers.layernorm32 import FastLayerNorm32 as FP32LayerNorm
 
 logger = init_logger(__name__)
 
@@ -675,9 +675,7 @@ class WanTransformerBlock(nn.Module):
         hidden_states = hidden_states + attn_output
 
         # 3. Feed-forward
-        norm_hidden_states = (self.norm3(hidden_states) * (1 + c_scale_msa) + c_shift_msa).type_as(
-            hidden_states
-        )
+        norm_hidden_states = (self.norm3(hidden_states) * (1 + c_scale_msa) + c_shift_msa).type_as(hidden_states)
         ff_output = self.ffn(norm_hidden_states)
         hidden_states = (hidden_states.float() + ff_output.float() * c_gate_msa).type_as(hidden_states)
 
