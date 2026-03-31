@@ -3,6 +3,7 @@
 
 import math
 from collections.abc import Iterable
+from importlib.util import find_spec
 from typing import Any
 
 import torch
@@ -30,7 +31,6 @@ from vllm_omni.diffusion.distributed.sp_plan import (
 )
 from vllm_omni.diffusion.forward_context import get_forward_context
 
-from importlib.util import find_spec
 from vllm_omni.diffusion.layers.rope import RotaryEmbedding
 from vllm_omni.platforms import current_omni_platform
 
