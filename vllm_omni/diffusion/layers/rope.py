@@ -51,7 +51,7 @@ def apply_rotary_emb_mindiesd(
         sin = sin[0]
     if cos.shape[-1] == x.shape[-1]:
         half_head_dim = False
-         # already expanded to (S, D), just use directly
+        # already expanded to (S, D), just use directly
     if interleaved:
         # if last dim of sin and cos is D/2, expand to (S, D) to adapt to mindiesd operators
         if half_head_dim:
