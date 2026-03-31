@@ -99,7 +99,6 @@ class RotaryEmbedding(CustomOp):
             # (B, S, D/2) -> (S, D/2)
             cos = cos[0]
             sin = sin[0]
-
         return apply_rotary_emb(
             x,
             cos,
