@@ -424,8 +424,8 @@ class WanSelfAttention(nn.Module):
         if rotary_emb is not None:
             freqs_cos, freqs_sin = rotary_emb
             if find_spec("mindiesd") is not None and current_omni_platform.is_npu():
-                query = self.rope(query,freqs_cos, freqs_sin)
-                key = self.rope(key,freqs_cos, freqs_sin)
+                query = self.rope(query, freqs_cos, freqs_sin)
+                key = self.rope(key, freqs_cos, freqs_sin)
             else:
                 query = apply_rotary_emb_wan(query, freqs_cos, freqs_sin)
                 key = apply_rotary_emb_wan(key, freqs_cos, freqs_sin)
