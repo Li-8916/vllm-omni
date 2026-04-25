@@ -639,9 +639,6 @@ class Wan22VACEPipeline(Wan22Pipeline, SupportImageInput):
 
         self._current_timestep = None
 
-        if current_omni_platform.is_available():
-            current_omni_platform.empty_cache()
-
         # Trim reference frames from output before decoding
         # (reference images were prepended as extra temporal frames)
         if output_type != "latent" and num_reference_images > 0:
